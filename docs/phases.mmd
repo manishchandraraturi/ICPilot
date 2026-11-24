@@ -1,0 +1,57 @@
+%% phases.mmd — render at https://mermaid.live or in VS Code Mermaid preview
+flowchart LR
+  P0["P0: Repo, scaffold, tooling, CI skeleton, health route"]
+  P1["P1: Design system + app shell (exact glass UI from reference images)"]
+  P2["P2: Database, auth, organizations, RLS, demo account, labeled seed data"]
+  P3["P3: Core infra: LLM adapter, jobs, live event feed (Supabase Realtime), metering hooks, quota guard, logging"]
+  P4["P4: Module 1a: Product intake (chat + structured form)"]
+  P5["P5: Module 1b: ICP engine, confidence scores, expansion, accept/adjust/dismiss"]
+  P6["P6: Search, scraping, RAG store (sources, chunks, embeddings, SSRF guard)"]
+  P7["P7: Module 2a: Buyer discovery with verified citations and negative-signal filter"]
+  P8["P8: Module 2b: Competitor discovery and landscape mapping"]
+  P9["P9: Module 3a: Knowledge graph (Neo4j schema, sync, graph view, warm-intro paths)"]
+  P10["P10: Module 3b: Signal ingestion, graph reasoning queries, Fit & Intent scoring"]
+  P11["P11: Module 4a: Enrichment pipeline (4 vendors, MX check, inline indicators)"]
+  P12["P12: Module 4b: Outreach synthesis + HITL approval gateway"]
+  P13["P13: Module 4c: Messaging layer (dispatch modes, webhooks, rate limits, compliance)"]
+  P14["P14: Module 5a: Kanban pipeline, attribution, audit log"]
+  P15["P15: Module 5b: Analytics, split-testing, CSV export"]
+  P16["P16: Integration pass: end-to-end flow, Agent Thinking wired everywhere"]
+  P17["P17: BONUS: Flexprice metering and credit gating"]
+  P18["P18: BONUS: Band multi-agent orchestration"]
+  P19["P19: BONUS: Snyk SAST + SCA in CI/CD"]
+  P20["P20: Hardening: citation eval harness, e2e tests, a11y, theme toggle, perf"]
+  P21["P21: Deployment (Vercel + Supabase + Neo4j Aura), demo dataset, health page"]
+  P22["P22: Deliverables: README, system design doc, viability brief, demo script, final audit"]
+  P0 --> P1
+  P0 --> P2
+  P1 --> P2
+  P2 --> P3
+  P3 --> P4
+  P4 --> P5
+  P3 --> P6
+  P5 --> P7
+  P6 --> P7
+  P6 --> P8
+  P7 --> P9
+  P8 --> P9
+  P9 --> P10
+  P7 --> P11
+  P10 --> P12
+  P11 --> P12
+  P12 --> P13
+  P13 --> P14
+  P14 --> P15
+  P15 --> P16
+  P16 --> P17
+  P16 --> P18
+  P13 --> P19
+  P18 --> P20
+  P17 --> P20
+  P16 --> P20
+  P20 --> P21
+  P21 --> P22
+  classDef bonus fill:#e8e1ff,stroke:#7a6bd6;
+  classDef cut fill:#ffe9e7,stroke:#d6574a,stroke-width:3px;
+  class P17,P18,P19 bonus;
+  class P14 cut;

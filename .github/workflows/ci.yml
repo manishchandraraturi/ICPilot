@@ -1,0 +1,48 @@
+name: CI
+on:
+  push: { branches: [main] }
+  pull_request:
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    services:
+      db:
+        image: pgvector/pgvector:pg16
+        env: { POSTGRES_USER: postgres, POSTGRES_PASSWORD: postgres, POSTGRES_DB: icpilot_test }
+        ports: ["54329:5432"]
+    env:
+      DATABASE_URL_TEST: postgres://postgres:postgres@localhost:54329/icpilot_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version-file: .nvmrc, cache: npm }
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run test
+      - run: npm run build
+        env: { SKIP_ENV_VALIDATION: "1" }
+  secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: gitleaks/gitleaks-action@v2
+        env: { GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
+  snyk:
+    # SNK-01 / SNK-02 (enabled in P19). Runs only when SNYK_TOKEN secret exists.
+    runs-on: ubuntu-latest
+    env: { SNYK_TOKEN: "${{ secrets.SNYK_TOKEN }}" }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version-file: .nvmrc, cache: npm }
+      - run: npm ci
+      - uses: snyk/actions/setup@master
+        if: env.SNYK_TOKEN != ''
+      - name: SCA (dependencies)
+        if: env.SNYK_TOKEN != ''
+        run: snyk test --severity-threshold=high
+      - name: SAST (source code)
+        if: env.SNYK_TOKEN != ''
+        run: snyk code test --severity-threshold=high

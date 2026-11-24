@@ -1,0 +1,38 @@
+# dependencies
+node_modules/
+.pnp*
+# builds
+.next/
+out/
+dist/
+build/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+# env and secrets (NEVER commit)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+service-account*.json
+# logs / OS / editors
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+# tests
+playwright-report/
+test-results/
+.playwright/
+# local DB / data
+pgdata/
+*.sqlite
+# vercel
+.vercel
+# agent scratch
+.agent-scratch/
+tmp/
